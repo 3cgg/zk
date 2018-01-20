@@ -18,7 +18,7 @@ object TestZooKeeper {
     val zooKeeperConfig = new ZooKeeperConfig
 
     val cliParams=new CliParams(args)
-      .append(ZooKeeperCliParam.__CONNECT_STRING__,"192.168.1.109:2181")
+      .append(ZooKeeperCliParam.__CONNECT_STRING__,"one.3cgg.rec:2181")
       .append(ZooKeeperCliParam.__NAME_SPACE__,"lib_me_test")
 
     zooKeeperConfig.setConnectString(ZooKeeperCliParam.connectString(cliParams))
