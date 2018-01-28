@@ -216,6 +216,23 @@ public class NodeLeader implements Serializable{
 		return nodeMeta;
 	}
 
+	/**
+	 * get parameter value
+	 * @param key
+	 * @return
+	 */
+	public Object get(String key){
+		return conf.get(key);
+	}
+
+	/**
+	 * get parameter value
+	 * @param key
+	 * @return
+	 */
+	public Object get(String key,Object _default){
+		return conf.get(key,_default);
+	}
 
 
 }
