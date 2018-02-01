@@ -38,6 +38,7 @@ public class NodeLeader implements Serializable{
 
 	private boolean start=false;
 
+	private boolean leaderClosed=true;
 
 	private String leaderPath(){
 		return conf.getBasePath()+"/leader-latch";
@@ -59,7 +60,7 @@ public class NodeLeader implements Serializable{
 		this.joinExecutor=Executors.newFixedThreadPool(1,r->new Thread(r, "["+name()+"]node-leader-join"));
 
 		leaderLatch=new LeaderLatch(executor.backend(),
-				leaderPath());
+				leaderPath(),"", LeaderLatch.CloseMode.NOTIFY_LEADER);
 		leaderLatch.addListener(new LeaderLatchListener() {
 			
 			@Override
@@ -89,21 +90,26 @@ public class NodeLeader implements Serializable{
 					logger.error("as resource cannot be closed safely, exit VM.");
 					System.exit(-1);
 				}
-				joinLeader();
+
+				leaderClosed=true;
+//				joinLeader(); // check if the implementer reconnect automatically
 			}
 			
 			@Override
 			public synchronized void isLeader() {
 				logger.info(Thread.currentThread().getName()+" is leader .... ");
-				try {
-					for (OpenResource openResource : leaderBuilder.openResources) {
-						logger.info("attempt to open "+openResource.name());
-						openResource.open(NodeLeader.this);
+				if(leaderClosed){
+					try {
+						for (OpenResource openResource : leaderBuilder.openResources) {
+							logger.info("attempt to open "+openResource.name());
+							openResource.open(NodeLeader.this);
+						}
+					}catch (Throwable e){
+						logger.error("as resource cannot be open safely, exit VM.",e);
+						System.exit(-1);
 					}
-				}catch (Throwable e){
-					logger.error("as resource cannot be open safely, exit VM.",e);
-					System.exit(-1);
 				}
+				leaderClosed=false;
 
 			}
 		}, Executors.newFixedThreadPool(1,r->new Thread(r, "["+name()+"]leader-status-changed-listener")));
