@@ -4,6 +4,8 @@ import me.libme.kernel._c.json.JJSON;
 import me.libme.kernel._c.util.NetUtil;
 import me.libme.module.zookeeper.ZooKeeperConnector;
 import org.apache.zookeeper.CreateMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -13,6 +15,8 @@ import java.net.InetAddress;
  * Created by J on 2018/1/27.
  */
 public class LeaderNodeRegister implements OpenResource,CloseResource {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(LeaderNodeRegister.class);
 
     private final String name;
 
@@ -52,6 +56,15 @@ public class LeaderNodeRegister implements OpenResource,CloseResource {
         nodeMeta.setPid(Integer.parseInt(pid));
 
         String string= JJSON.get().format(nodeMeta);
+
+        if(executor.exists(path)){   // first remove path
+            try{
+                executor.deletePath(path);
+            }catch (Exception e){
+                LOGGER.warn(e.getMessage(),e);
+            }
+        }
         executor.createPath(path,string, CreateMode.EPHEMERAL);
+
     }
 }
