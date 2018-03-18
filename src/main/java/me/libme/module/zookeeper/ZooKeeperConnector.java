@@ -1,6 +1,7 @@
 package me.libme.module.zookeeper;
 
 import me.libme.kernel._c.util.JStringUtils;
+import me.libme.module.zookeeper.fn.ls.NodeLeader;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.*;
@@ -8,6 +9,8 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCache.StartMode;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent.Type;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import java.util.concurrent.Executors;
 
 @SuppressWarnings("serial")
 public class ZooKeeperConnector implements Serializable {
+
+	private static final Logger logger= LoggerFactory.getLogger(ZooKeeperConnector.class);
 
 	private ZooKeeperConfig zooKeeperConfig;
 	
@@ -35,13 +40,17 @@ public class ZooKeeperConnector implements Serializable {
 	}
 	
 	public abstract class ZookeeperExecutor implements Serializable{
-		
+
+
 		private CuratorFramework curatorFramework;
 		
 		protected abstract ZooKeeperConfig zooKeeperConfigProvide();
 		
 		public ZookeeperExecutor() {
 			ZooKeeperConfig zooKeeperConfig=zooKeeperConfigProvide();
+
+			logger.info("ZK Connection String : "+zooKeeperConfig.getConnectString());
+			logger.info("ZK Connection Namespace : "+zooKeeperConfig.getNamespace());
 	        CuratorFramework client = CuratorFrameworkFactory.builder()
 	                .connectString(zooKeeperConfig.getConnectString())
 	                .retryPolicy(zooKeeperConfig.getRetryPolicy())
