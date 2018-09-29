@@ -28,7 +28,7 @@ object TestZooKeeper {
 
     // do crud
 
-    val path="b"
+    val path="/b"
 
     executor.createPath(path,"data:a")
 
