@@ -1,7 +1,6 @@
 package me.libme.module.zookeeper;
 
 import me.libme.kernel._c.util.JStringUtils;
-import me.libme.module.zookeeper.fn.ls.NodeLeader;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.*;
