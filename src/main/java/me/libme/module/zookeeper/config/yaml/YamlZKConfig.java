@@ -26,12 +26,6 @@ public class YamlZKConfig implements ZooKeeperConfigFinder {
         zooKeeperConfig.setConnectString(connectString);
         zooKeeperConfig.setNamespace(namespace);
 
-        ZooKeeperConfig.Node node=new ZooKeeperConfig.Node();
-        node.setName(yamlMapConfig.getString("cpp.zk.node.name","Test-Node"));
-        node.setIp(yamlMapConfig.getString("cpp.zk.node.ip","0.0.0.0"));
-        node.setHostName(yamlMapConfig.getString("cpp.zk.node.host-name","Test-Host-Name"));
-        zooKeeperConfig.setNode(node);
-
         return zooKeeperConfig;
     }
 

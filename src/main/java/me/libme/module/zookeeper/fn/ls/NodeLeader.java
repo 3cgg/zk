@@ -148,16 +148,20 @@ public class NodeLeader implements Serializable{
 					leaderLatch.await();
 					break;
 				}catch (InterruptedException e) {
+					logger.info(Thread.currentThread().getName()+" interrupted.... ");
 					continue;
 				}catch (EOFException e) {
 					logger.error(e.getMessage(),e);
+					throw e;
 				}catch (Exception e) {
 					logger.error(e.getMessage(),e);
+					throw e;
 				}
 			}
 			logger.info(Thread.currentThread().getName()+" got leader.... ");
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
+			logger.info(Thread.currentThread().getName()+" cannot get leader , exception occurs.... ");
 		}finally {
 
 		}

@@ -2,10 +2,6 @@ cpp:
   zk:
     namespace: cpp-zk
     connect-string: zk.3cgg.rec:2181
-    node:
-      ip: 0.0.0.0
-      host-name: J
-      name: J
 
 
 
