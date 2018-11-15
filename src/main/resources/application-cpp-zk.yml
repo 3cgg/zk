@@ -1,6 +1,6 @@
 cpp:
   zk:
-    namespace: cpp-storm
+    namespace: cpp-zk
     connect-string: zk.3cgg.rec:2181
 
 

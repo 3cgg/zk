@@ -4,7 +4,6 @@ import me.libme.kernel._c.util.{CliParams, JStringUtils}
 import me.libme.module.zookeeper.{ZooKeeperConfig, ZooKeeperConnector}
 
 import scala.collection.JavaConversions
-import scalalg.me.libme.module.zookeeper.ZooKeeperCliParam
 
 /**
   * Created by J on 2018/1/11.

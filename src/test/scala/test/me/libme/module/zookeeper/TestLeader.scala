@@ -4,8 +4,6 @@ import me.libme.kernel._c.util.CliParams
 import me.libme.module.zookeeper.fn.ls.{LeaderConfig, LeaderNodeRegister, NodeLeader}
 import me.libme.module.zookeeper.{ZooKeeperConfig, ZooKeeperConnector}
 
-import scalalg.me.libme.module.zookeeper.ZooKeeperCliParam
-
 /**
   * Created by J on 2018/1/27.
   */

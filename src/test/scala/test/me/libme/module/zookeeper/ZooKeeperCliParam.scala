@@ -1,4 +1,4 @@
-package scalalg.me.libme.module.zookeeper
+package test.me.libme.module.zookeeper
 
 import me.libme.kernel._c.util.CliParams
 

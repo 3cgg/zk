@@ -10,13 +10,18 @@ public class ZKExecutor {
     private static ZooKeeperConnector.ZookeeperExecutor executor;
 
 
+    public static ZooKeeperConfig defaultConfig(){
+        return new YamlZKConfig(Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("application-cpp-zk.yml")).find();
+    }
+
+
     public static ZooKeeperConnector.ZookeeperExecutor defaultExecutor(){
 
         if(executor==null){
             synchronized (ZKExecutor.class){
                 if(executor==null){
-                    ZooKeeperConfig zooKeeperConfig=new YamlZKConfig(Thread.currentThread().getContextClassLoader()
-                            .getResourceAsStream("application-cpp-zk.yml")).find();
+                    ZooKeeperConfig zooKeeperConfig=defaultConfig();
                     ZKExecutor.executor=executor(zooKeeperConfig);
                 }
             }
