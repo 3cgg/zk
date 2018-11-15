@@ -1,7 +1,8 @@
 package me.libme.module.zookeeper.fn.ls;
 
 import me.libme.kernel._c.json.JJSON;
-import me.libme.kernel._c.util.NetUtil;
+import me.libme.module.zookeeper.ZKExecutor;
+import me.libme.module.zookeeper.ZooKeeperConfig;
 import me.libme.module.zookeeper.ZooKeeperConnector;
 import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.net.InetAddress;
 
 /**
  * Created by J on 2018/1/27.
@@ -45,9 +45,10 @@ public class LeaderNodeRegister implements OpenResource,CloseResource {
 
         NodeMeta nodeMeta=nodeLeader.getNodeMeta();
 
-        InetAddress inetAddress= NetUtil.getLocalAddress();
-        nodeMeta.setIp(inetAddress.getHostAddress());
-        nodeMeta.setHostName(inetAddress.getHostName());
+        ZooKeeperConfig zooKeeperConfig=ZKExecutor.defaultConfig();
+
+        nodeMeta.setIp(zooKeeperConfig.getNode().getIp());
+        nodeMeta.setHostName(zooKeeperConfig.getNode().getHostName());
         String pid = ManagementFactory.getRuntimeMXBean().getName();
         int indexOf = pid.indexOf('@');
         if (indexOf > 0){
